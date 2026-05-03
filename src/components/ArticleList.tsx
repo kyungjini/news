@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 type Article = {
   title: string
   summary: string
@@ -7,6 +9,8 @@ type Article = {
 type Press = { id: string; title: string; category: string }
 
 export default function ArticleList({ featured, articles }: { featured: Press; articles: Article[] }) {
+  const [active, setActive] = useState<'main' | 'latest' | 'subs'>('main')
+
   return (
     <section className="section-shell list-shell" aria-labelledby="opened-press-title">
       <div className="section-head list-head">
@@ -15,13 +19,31 @@ export default function ArticleList({ featured, articles }: { featured: Press; a
           <h2 id="opened-press-title">구독한 언론사 기사 목록</h2>
         </div>
         <div className="tabs" role="tablist" aria-label="언론사 탭 미리보기">
-          <button className="tab is-active" type="button" role="tab" aria-selected="true">
+          <button
+            className={`tab ${active === 'main' ? 'is-active' : ''}`}
+            type="button"
+            role="tab"
+            aria-selected={active === 'main'}
+            onClick={() => setActive('main')}
+          >
             주요 기사
           </button>
-          <button className="tab" type="button" role="tab" aria-selected="false">
+          <button
+            className={`tab ${active === 'latest' ? 'is-active' : ''}`}
+            type="button"
+            role="tab"
+            aria-selected={active === 'latest'}
+            onClick={() => setActive('latest')}
+          >
             최신 기사
           </button>
-          <button className="tab" type="button" role="tab" aria-selected="false">
+          <button
+            className={`tab ${active === 'subs' ? 'is-active' : ''}`}
+            type="button"
+            role="tab"
+            aria-selected={active === 'subs'}
+            onClick={() => setActive('subs')}
+          >
             구독 현황
           </button>
         </div>
