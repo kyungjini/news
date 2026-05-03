@@ -42,8 +42,11 @@ function App() {
     <div className="newsstand-app">
       <header className="newsstand-header">
         <div className="brand" aria-label="뉴스스탠드">
-          <span className="brand-mark" aria-hidden="true">
-            신문
+          <span className="brand-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="presentation" focusable="false">
+              <rect x="3" y="4" width="18" height="16" rx="3" />
+              <path d="M7 8h10M7 12h10M7 16h6" />
+            </svg>
           </span>
           <span className="brand-title">뉴스스탠드</span>
         </div>
@@ -51,9 +54,16 @@ function App() {
       </header>
 
       <section className="ticker" aria-label="알림 배너">
-        <div className="ticker-track">
+        <div className="ticker-lane ticker-lane-primary">
           {tickerItems.map((item) => (
             <span key={item} className="ticker-item">
+              {item}
+            </span>
+          ))}
+        </div>
+        <div className="ticker-lane ticker-lane-secondary" aria-hidden="true">
+          {tickerItems.map((item) => (
+            <span key={`${item}-clone`} className="ticker-item">
               {item}
             </span>
           ))}
