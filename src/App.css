@@ -205,6 +205,28 @@
   position: relative;
 }
 
+.subscribe-pill {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 6px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--accent);
+  font-size: 12px;
+  line-height: 1;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.press-cell:hover .subscribe-pill,
+.press-cell:focus-within .subscribe-pill {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .press-category {
   font-size: 11px;
   line-height: 1;

@@ -12,9 +12,14 @@ export default function PressGrid({ presses }: { presses: Press[] }) {
   const total = presses.length
   const totalPages = Math.max(1, Math.ceil(total / perPage))
   const [page, setPage] = useState(0)
+  const [subs, setSubs] = useState<Record<string, boolean>>({})
 
   const start = page * perPage
   const visible = presses.slice(start, start + perPage)
+
+  function toggleSub(id: string) {
+    setSubs((s) => ({ ...s, [id]: !s[id] }))
+  }
 
   function getWordmarkProps(press: Press) {
     const titleLength = press.title.length
@@ -63,6 +68,15 @@ export default function PressGrid({ presses }: { presses: Press[] }) {
             <span className="press-category">{press.category}</span>
             <PressWordmark title={press.title} {...getWordmarkProps(press)} />
             <span className="press-meta">{String(start + index + 1).padStart(2, '0')}</span>
+            <button
+              className="subscribe-pill"
+              type="button"
+              aria-pressed={!!subs[press.id]}
+              aria-label={`${press.title} ${subs[press.id] ? '구독 해제' : '구독'}`}
+              onClick={() => toggleSub(press.id)}
+            >
+              {subs[press.id] ? '구독중' : '구독'}
+            </button>
           </div>
         ))}
       </div>
