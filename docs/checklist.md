@@ -14,7 +14,7 @@
 
 ## Week 2
 - [x] Add hover behavior on grid cells to reveal the subscribe/unsubscribe pill.
-- [ ] Implement the subscribed-state grid for `내가 구독한 언론사`, including sparse cells and empty white slots.
+- [x] Implement the subscribed-state grid for `내가 구독한 언론사`, including sparse cells and empty white slots.
 - [ ] Add tab progress overlays for the opened-press view with the 6-second linear fill animation.
 - [ ] Implement automatic tab/category advancement when the progress bar completes.
 - [ ] Add ticker rotation timing, crossfade behavior, and pause-on-hover/focus logic.

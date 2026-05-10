@@ -162,6 +162,32 @@
   font-weight: 700;
 }
 
+.grid-head-left {
+  display: grid;
+  gap: 8px;
+}
+
+.grid-view-tabs {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.grid-view-tab {
+  min-height: 28px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  background: var(--soft-alt);
+  color: var(--sub);
+  font-size: 12px;
+  line-height: 1;
+}
+
+.grid-view-tab.is-active {
+  background: #fff;
+  color: var(--ink);
+  border-color: var(--accent);
+}
+
 .eyebrow {
   margin: 0 0 4px;
   color: var(--sub);
@@ -184,6 +210,11 @@
   line-height: 1;
 }
 
+.chevron:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
 .press-grid {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -203,6 +234,20 @@
   flex-direction: column;
   justify-content: space-between;
   position: relative;
+}
+
+.press-cell.is-empty {
+  background: #fff;
+}
+
+.press-grid-empty {
+  grid-column: 1 / -1;
+  min-height: 120px;
+  display: grid;
+  place-items: center;
+  color: var(--mute);
+  font-size: 13px;
+  background: #fff;
 }
 
 .subscribe-pill {
