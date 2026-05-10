@@ -291,10 +291,20 @@
 }
 
 .press-wordmark {
-  display: block;
+  display: grid;
+  gap: 4px;
   line-height: 1.15;
+  min-height: 34px;
+}
+
+.press-wordmark-main {
   word-break: keep-all;
   white-space: normal;
+  overflow-wrap: anywhere;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .press-wordmark[data-family='sans'] {
@@ -344,6 +354,26 @@
 
 .press-wordmark[data-family='serif'][data-size='lg'] {
   line-height: 1.1;
+}
+
+.press-wordmark[data-accent='accent'] .press-wordmark-main {
+  color: var(--accent-deep);
+}
+
+.press-wordmark[data-accent='muted'] .press-wordmark-main {
+  color: var(--sub);
+}
+
+.press-wordmark-flag {
+  justify-self: start;
+  padding: 2px 6px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font-size: 10px;
+  line-height: 1;
+  color: var(--mute);
+  background: #fff;
+  letter-spacing: 0.01em;
 }
 
 .press-meta {

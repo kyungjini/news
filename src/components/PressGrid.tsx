@@ -40,19 +40,36 @@ export default function PressGrid({ presses, selectedPressId, onSelectPress }: P
 
   function getWordmarkProps(press: Press) {
     const titleLength = press.title.length
+    const flagMap: Record<string, string> = {
+      'weekly-khan': '주간',
+      'boy-korea-ilbo': '소년',
+      tvchosun: 'TV',
+      'spotv-news': 'LIVE',
+    }
 
     return {
       family: press.category === 'MAGAZINE' ? 'serif' : 'sans',
       italic: press.category === 'IT' || /News/i.test(press.title),
       weight: titleLength > 10 ? 500 : 700,
       tracking: titleLength > 12 ? 'tight' : titleLength > 8 ? 'normal' : 'wide',
-      size: titleLength > 10 ? 'sm' : 'md',
+      size: titleLength > 14 ? 'xs' : titleLength > 10 ? 'sm' : 'md',
+      accent:
+        press.category === 'BROADCAST'
+          ? 'accent'
+          : press.category === 'MAGAZINE'
+            ? 'muted'
+            : 'default',
+      flag: flagMap[press.id],
     } as const
   }
 
   function handleSelectPress(press: Press) {
     onSelectPress?.(press)
   }
+
+  const allTabId = 'press-grid-tab-all'
+  const subscribedTabId = 'press-grid-tab-subscribed'
+  const panelId = 'press-grid-panel'
 
   return (
     <section className="section-shell" aria-labelledby="press-grid-title">
@@ -61,19 +78,25 @@ export default function PressGrid({ presses, selectedPressId, onSelectPress }: P
           <h1 id="press-grid-title">{mode === 'all' ? '전체 언론사' : '내가 구독한 언론사'}</h1>
           <div className="grid-view-tabs" role="tablist" aria-label="언론사 뷰 전환">
             <button
+              id={allTabId}
               className={`grid-view-tab ${mode === 'all' ? 'is-active' : ''}`}
               type="button"
               role="tab"
               aria-selected={mode === 'all'}
+              aria-controls={panelId}
+              tabIndex={mode === 'all' ? 0 : -1}
               onClick={() => setMode('all')}
             >
               전체
             </button>
             <button
+              id={subscribedTabId}
               className={`grid-view-tab ${mode === 'subscribed' ? 'is-active' : ''}`}
               type="button"
               role="tab"
               aria-selected={mode === 'subscribed'}
+              aria-controls={panelId}
+              tabIndex={mode === 'subscribed' ? 0 : -1}
               onClick={() => setMode('subscribed')}
             >
               구독
@@ -102,8 +125,10 @@ export default function PressGrid({ presses, selectedPressId, onSelectPress }: P
       </div>
 
       <div
+        id={panelId}
         className="press-grid"
-        role="presentation"
+        role="tabpanel"
+        aria-labelledby={mode === 'all' ? allTabId : subscribedTabId}
         aria-label={mode === 'all' ? '전체 언론사 그리드' : '내가 구독한 언론사 그리드'}
       >
         {mode === 'subscribed' && visible.length === 0 && (

@@ -19,6 +19,10 @@ export default function ArticleList({
   sectionRef?: RefObject<HTMLElement | null>
 }) {
   const [active, setActive] = useState<'main' | 'latest' | 'subs'>('main')
+  const tabMainId = 'opened-tab-main'
+  const tabLatestId = 'opened-tab-latest'
+  const tabSubsId = 'opened-tab-subs'
+  const panelId = 'opened-tabpanel'
 
   useEffect(() => {
     const timeout = window.setTimeout(() => {
@@ -41,20 +45,26 @@ export default function ArticleList({
         </div>
         <div className="tabs" role="tablist" aria-label="언론사 탭 미리보기">
           <button
+            id={tabMainId}
             className={`tab ${active === 'main' ? 'is-active' : ''}`}
             type="button"
             role="tab"
             aria-selected={active === 'main'}
+            aria-controls={panelId}
+            tabIndex={active === 'main' ? 0 : -1}
             onClick={() => setActive('main')}
           >
             주요 기사
             {active === 'main' && <span key="progress-main" className="tab-progress" aria-hidden="true" />}
           </button>
           <button
+            id={tabLatestId}
             className={`tab ${active === 'latest' ? 'is-active' : ''}`}
             type="button"
             role="tab"
             aria-selected={active === 'latest'}
+            aria-controls={panelId}
+            tabIndex={active === 'latest' ? 0 : -1}
             onClick={() => setActive('latest')}
           >
             최신 기사
@@ -63,10 +73,13 @@ export default function ArticleList({
             )}
           </button>
           <button
+            id={tabSubsId}
             className={`tab ${active === 'subs' ? 'is-active' : ''}`}
             type="button"
             role="tab"
             aria-selected={active === 'subs'}
+            aria-controls={panelId}
+            tabIndex={active === 'subs' ? 0 : -1}
             onClick={() => setActive('subs')}
           >
             구독 현황
@@ -75,7 +88,14 @@ export default function ArticleList({
         </div>
       </div>
 
-      <div className="list-layout">
+      <div
+        id={panelId}
+        role="tabpanel"
+        aria-labelledby={
+          active === 'main' ? tabMainId : active === 'latest' ? tabLatestId : tabSubsId
+        }
+        className="list-layout"
+      >
         <article className="featured-card">
           <p className="featured-kicker">오늘의 대표 기사</p>
           <div className="featured-visual" aria-hidden="true" />
