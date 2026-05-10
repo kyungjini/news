@@ -359,6 +359,8 @@
 }
 
 .tab {
+  position: relative;
+  overflow: hidden;
   min-height: 40px;
   padding: 0 14px;
   border: 1px solid var(--line);
@@ -373,6 +375,26 @@
   color: var(--ink);
   border-color: var(--accent);
   box-shadow: inset 0 -2px 0 var(--accent-deep);
+}
+
+.tab-progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--accent-deep);
+  transform-origin: left center;
+  animation: tab-progress-fill 6s linear forwards;
+}
+
+@keyframes tab-progress-fill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
 }
 
 .list-layout {

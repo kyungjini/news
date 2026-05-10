@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 type Article = {
   title: string
@@ -10,6 +10,18 @@ type Press = { id: string; title: string; category: string }
 
 export default function ArticleList({ featured, articles }: { featured: Press; articles: Article[] }) {
   const [active, setActive] = useState<'main' | 'latest' | 'subs'>('main')
+
+  useEffect(() => {
+    const timeout = window.setTimeout(() => {
+      setActive((current) => {
+        if (current === 'main') return 'latest'
+        if (current === 'latest') return 'subs'
+        return 'main'
+      })
+    }, 6000)
+
+    return () => window.clearTimeout(timeout)
+  }, [active])
 
   return (
     <section className="section-shell list-shell" aria-labelledby="opened-press-title">
@@ -27,6 +39,7 @@ export default function ArticleList({ featured, articles }: { featured: Press; a
             onClick={() => setActive('main')}
           >
             주요 기사
+            {active === 'main' && <span key="progress-main" className="tab-progress" aria-hidden="true" />}
           </button>
           <button
             className={`tab ${active === 'latest' ? 'is-active' : ''}`}
@@ -36,6 +49,9 @@ export default function ArticleList({ featured, articles }: { featured: Press; a
             onClick={() => setActive('latest')}
           >
             최신 기사
+            {active === 'latest' && (
+              <span key="progress-latest" className="tab-progress" aria-hidden="true" />
+            )}
           </button>
           <button
             className={`tab ${active === 'subs' ? 'is-active' : ''}`}
@@ -45,6 +61,7 @@ export default function ArticleList({ featured, articles }: { featured: Press; a
             onClick={() => setActive('subs')}
           >
             구독 현황
+            {active === 'subs' && <span key="progress-subs" className="tab-progress" aria-hidden="true" />}
           </button>
         </div>
       </div>
