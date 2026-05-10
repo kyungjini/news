@@ -17,8 +17,8 @@
 - [x] Implement the subscribed-state grid for `내가 구독한 언론사`, including sparse cells and empty white slots.
 - [x] Add tab progress overlays for the opened-press view with the 6-second linear fill animation.
 - [x] Implement automatic tab/category advancement when the progress bar completes.
-- [ ] Add ticker rotation timing, crossfade behavior, and pause-on-hover/focus logic.
-- [ ] Connect page-level navigation and state changes between grid view and list view.
+- [x] Add ticker rotation timing, crossfade behavior, and pause-on-hover/focus logic.
+- [x] Connect page-level navigation and state changes between grid view and list view.
 - [ ] Make the header date dynamic so it reflects the current day.
 - [ ] Ensure press wordmarks support long names, two-line wrapping, and special flags or accent variants.
 - [ ] Add reduced-motion handling so animations are disabled or simplified when requested by the OS.

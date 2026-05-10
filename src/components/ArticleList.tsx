@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import type { RefObject } from 'react'
 
 type Article = {
   title: string
@@ -8,7 +9,15 @@ type Article = {
 
 type Press = { id: string; title: string; category: string }
 
-export default function ArticleList({ featured, articles }: { featured: Press; articles: Article[] }) {
+export default function ArticleList({
+  featured,
+  articles,
+  sectionRef,
+}: {
+  featured: Press
+  articles: Article[]
+  sectionRef?: RefObject<HTMLElement | null>
+}) {
   const [active, setActive] = useState<'main' | 'latest' | 'subs'>('main')
 
   useEffect(() => {
@@ -24,7 +33,7 @@ export default function ArticleList({ featured, articles }: { featured: Press; a
   }, [active])
 
   return (
-    <section className="section-shell list-shell" aria-labelledby="opened-press-title">
+    <section className="section-shell list-shell" aria-labelledby="opened-press-title" ref={sectionRef}>
       <div className="section-head list-head">
         <div>
           <p className="eyebrow">Opened Press</p>

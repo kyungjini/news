@@ -7,7 +7,13 @@ type Press = {
   category: string
 }
 
-export default function PressGrid({ presses }: { presses: Press[] }) {
+type PressGridProps = {
+  presses: Press[]
+  selectedPressId?: string
+  onSelectPress?: (press: Press) => void
+}
+
+export default function PressGrid({ presses, selectedPressId, onSelectPress }: PressGridProps) {
   const perPage = 24
   const [page, setPage] = useState(0)
   const [subs, setSubs] = useState<Record<string, boolean>>({})
@@ -42,6 +48,10 @@ export default function PressGrid({ presses }: { presses: Press[] }) {
       tracking: titleLength > 12 ? 'tight' : titleLength > 8 ? 'normal' : 'wide',
       size: titleLength > 10 ? 'sm' : 'md',
     } as const
+  }
+
+  function handleSelectPress(press: Press) {
+    onSelectPress?.(press)
   }
 
   return (
@@ -106,10 +116,18 @@ export default function PressGrid({ presses }: { presses: Press[] }) {
           return (
             <div
               key={press.id}
-              className="press-cell"
+              className={`press-cell ${selectedPressId === press.id ? 'is-selected' : ''}`}
               role="button"
               tabIndex={0}
               aria-label={`${press.title} (${press.category})`}
+              aria-current={selectedPressId === press.id ? 'true' : undefined}
+              onClick={() => handleSelectPress(press)}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault()
+                  handleSelectPress(press)
+                }
+              }}
             >
               <span className="press-category">{press.category}</span>
               <PressWordmark title={press.title} {...getWordmarkProps(press)} />
@@ -119,7 +137,10 @@ export default function PressGrid({ presses }: { presses: Press[] }) {
                 type="button"
                 aria-pressed={subscribed}
                 aria-label={`${press.title} ${subscribed ? '구독 해제' : '구독'}`}
-                onClick={() => toggleSub(press.id)}
+                onClick={(event) => {
+                  event.stopPropagation()
+                  toggleSub(press.id)
+                }}
               >
                 {subscribed ? '구독중' : '구독'}
               </button>
