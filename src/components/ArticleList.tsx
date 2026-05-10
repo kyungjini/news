@@ -7,22 +7,33 @@ type Article = {
   time: string
 }
 
+type TabPayload = {
+  featuredKicker: string
+  featuredSummary: string
+  items: Article[]
+}
+
+type TabKey = 'main' | 'latest' | 'subs'
+
+type ArticlesByTab = Record<TabKey, TabPayload>
+
 type Press = { id: string; title: string; category: string }
 
 export default function ArticleList({
   featured,
-  articles,
+  articlesByTab,
   sectionRef,
 }: {
   featured: Press
-  articles: Article[]
+  articlesByTab: ArticlesByTab
   sectionRef?: RefObject<HTMLElement | null>
 }) {
-  const [active, setActive] = useState<'main' | 'latest' | 'subs'>('main')
+  const [active, setActive] = useState<TabKey>('main')
   const tabMainId = 'opened-tab-main'
   const tabLatestId = 'opened-tab-latest'
   const tabSubsId = 'opened-tab-subs'
   const panelId = 'opened-tabpanel'
+  const currentPayload = articlesByTab[active]
 
   useEffect(() => {
     const timeout = window.setTimeout(() => {
@@ -97,20 +108,17 @@ export default function ArticleList({
         className="list-layout"
       >
         <article className="featured-card">
-          <p className="featured-kicker">오늘의 대표 기사</p>
+          <p className="featured-kicker">{currentPayload.featuredKicker}</p>
           <div className="featured-visual" aria-hidden="true" />
           <h3>{featured.title}</h3>
           <p className="featured-source">{featured.category} · {featured.title}</p>
-          <p>
-            lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque rutrum placerat lorem,
-            vitae tincidunt nunc suscipit eget.
-          </p>
+          <p>{currentPayload.featuredSummary}</p>
         </article>
 
         <ol className="article-list">
-          {articles.map((article, index) => (
+          {currentPayload.items.map((article, index) => (
             <li key={article.title}>
-              <span className="article-index">0{index + 1}</span>
+              <span className="article-index">{String(index + 1).padStart(2, '0')}</span>
               <div className="article-body">
                 <p className="article-title">{article.title}</p>
                 <p className="article-summary">{article.summary}</p>

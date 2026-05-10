@@ -49,7 +49,7 @@ function App() {
         />
         <ArticleList
           featured={openedPress}
-          articles={articles as any}
+          articlesByTab={articles as any}
           sectionRef={listSectionRef}
         />
       </main>
